@@ -2,12 +2,12 @@
 version: "3.1"
 
 networks:
-  TS-EXPRESS-TEST:
+  NO_SQL_INJECTION_TEST:
     driver: bridge
 
 services:
   postgres:
-    container_name: "ts-express-test-postgres"
+    container_name: "nosql-injection-postgres-test"
     image: postgres:15.2
     restart: always
     environment:
@@ -17,13 +17,27 @@ services:
     ports:
       - 5432:5432
     networks:
-      - TS-EXPRESS-TEST
-  # redis:
-  #   container_name: "ts-express-test-redis"
-  #   image: "bitnami/redis:6.0.8"
-  #   environment:
-  #     REDIS_PASSWORD: password123
-  #   ports:
-  #     - 6379:6379
-  #   networks:
-  #     - TS-EXPRESS-TEST
+      - NO_SQL_INJECTION_TEST
+  bitnami_mongodb:
+    container_name: "nosql-injection-mongodb_test"
+    image: bitnami/mongodb:5.0.2
+    restart: always
+    environment:
+      MONGODB_ROOT_PASSWORD: password123
+      MONGODB_USERNAME: user123
+      MONGODB_PASSWORD: password123
+      MONGODB_DATABASE: ts-express
+    ports:
+      - 27017:27017
+    networks:
+      - NO_SQL_INJECTION_TEST
+
+  redis:
+    container_name: "nosql-injection-redis-test"
+    image: "bitnami/redis:6.0.8"
+    environment:
+      REDIS_PASSWORD: password123
+    ports:
+      - 6379:6379
+    networks:
+      - NO_SQL_INJECTION_TEST
