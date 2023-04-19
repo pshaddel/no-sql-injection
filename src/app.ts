@@ -5,6 +5,7 @@ import { config } from "../config";
 import { userRouter } from "./user/user.route";
 import "@total-typescript/ts-reset";
 import { userMongoDBRouter } from "./user-raw-mongodb/user.route";
+import { userMongooseRouter } from "./user-raw-mongoose/user.route";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.get("/ping", (_req: Request, res: Response) => {
 
 app.use(userRouter);
 app.use("/raw-mongodb", userMongoDBRouter);
+app.use("/mongoose", userMongooseRouter);
 
 app.use((_, res) => {
   res.status(404).send("Not found");
